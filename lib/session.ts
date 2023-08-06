@@ -1,10 +1,10 @@
-import NextAuth, {NextAuthOptions, User} from "next-auth";
+import {NextAuthOptions, User} from "next-auth";
 import AdapterUser from "next-auth/adapters";
 import {getServerSession} from "next-auth/next"
-import  Google from "next-auth/providers/google";
+import Google from "next-auth/providers/google";
+import {SessionInterface} from "../common.types";
 
 
-// @ts-ignore
 export const authOptions: NextAuthOptions = {
     providers: [
         Google ({
@@ -41,4 +41,8 @@ export const authOptions: NextAuthOptions = {
             }
         }
     }
+};
+
+export async function getCurrentUser(){
+    return await getServerSession(authOptions) as SessionInterface;
 }
