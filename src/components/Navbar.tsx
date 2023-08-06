@@ -5,19 +5,19 @@ import {NavLinks} from "@/constants";
 import AuthProviders from "@/components/AuthProviders";
 
 const Navbar = () => {
-    const session={};
+    const session=null;
     return (
         <nav className="flexBetween navbar">
             <div className="flex-1 flexStart gap-10">
                 <Link href="/">
                     <Image
-                        src="/logo.svg"
+                        src="/images/logo.svg"
                         alt="Stand with Ukraine logo"
                         width={120}
                         height={40}
                     />
                 </Link>
-                <ul className="xl:flex hidden text-small gap-7">
+                <ul className="xl:flex hidden text-small gap-7 ml-10">
                     {NavLinks.map((link) => (
                         <Link href={link.href} key={link.key}>
                             {link.text}

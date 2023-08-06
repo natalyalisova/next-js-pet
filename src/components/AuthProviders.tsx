@@ -4,7 +4,7 @@ const AuthProviders = () => {
 
     return (
         <div>
-            Auth
+            AuthProviders
         </div>)
 }
 
