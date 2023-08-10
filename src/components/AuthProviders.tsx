@@ -2,6 +2,9 @@
 
 import {getProviders,signIn} from "next-auth/react";
 import {useState, useEffect} from "react";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faArrowRightToBracket, faEnvelope} from "@fortawesome/free-solid-svg-icons";
+
 
 type Provider = {
     id: string;
@@ -33,7 +36,8 @@ if (providers){
     return (
         <div>
             {Object.values(providers).map((provider: Provider, i) => (
-                <button key={i} onClick={() => signIn(provider?.id)}>{provider.id}</button>
+                <button key={i} onClick={() => signIn(provider?.id)}>
+                    <FontAwesomeIcon icon={faArrowRightToBracket}/><span className="ml-3">{provider.id}</span> </button>
             ))}
         </div>)
 }
