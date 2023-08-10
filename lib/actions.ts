@@ -1,5 +1,5 @@
 import {GraphQLClient} from "graphql-request";
-import {getUserQuery} from "../graphql";
+import {createUserMutation, getUserQuery} from "../graphql";
 
 //create real environment
 
@@ -22,13 +22,19 @@ const makeGraphQLRequest = async (query: string,  variables = {}) => {
 }
 
 export  const getUser = (email: string) => {
+    client.setHeader("x-api-key", apiKey);
     return makeGraphQLRequest(getUserQuery, {email});
 }
 
-export const createUser = (name: string, email: string, avatar: string) => {
+export const createUser = (name: string, email: string, avatarUrl: string) => {
+    client.setHeader("x-api-key", apiKey);
     const variables = {
         input: {
-            name
+            name,
+            email,
+            avatarUrl
         }
     }
+
+    return makeGraphQLRequest(createUserMutation, variables);
 }

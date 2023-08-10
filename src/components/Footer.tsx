@@ -2,6 +2,8 @@ import Image from "next/image";
 import {footerLinks} from "@/constants";
 import Link from "next/link";
 import React from "react";
+import {faEnvelope} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 type ColumnProps = {
     title: string;
@@ -39,7 +41,8 @@ const Footer = () => {
                 </div>
             </div>
             <div className="flexBetween footer_copyright">
-                <p>@ 2023 Flexible. All rights reserved</p>
+                <p>@ 2023 Flexible. All rights reserved <span className="ml-3"><FontAwesomeIcon
+                    icon={faEnvelope} width={25} height={25}/> nglisova@gmail.com </span></p>
                 <p className="text-gray">
                     <span className="text-black font-semibold">10,214</span> projects submitted
                 </p>

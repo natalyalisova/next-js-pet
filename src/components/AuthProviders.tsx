@@ -10,9 +10,9 @@ type Provider = {
     id: string;
     name: string;
     type: string;
-    signinUrl: string;
+    signInUrl: string;
     callbackUrk: string;
-    signinUrlParams?: Record<string, string> | null;
+    signInUrlParams?: Record<string, string> | null;
 }
 
 type Providers = Record<string, Provider>
