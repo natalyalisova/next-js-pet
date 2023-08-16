@@ -22,12 +22,12 @@ const makeGraphQLRequest = async (query: string,  variables = {}) => {
 }
 
 export  const getUser = (email: string) => {
-    client.setHeader("x-api-key", apiKey);
+    client.setHeader("x-api-key", apiKey); //need to get access from provider, security issue
     return makeGraphQLRequest(getUserQuery, {email});
 }
 
 export const createUser = (name: string, email: string, avatarUrl: string) => {
-    client.setHeader("x-api-key", apiKey);
+    client.setHeader("x-api-key", apiKey); //need to get access from provider
     const variables = {
         input: {
             name,
