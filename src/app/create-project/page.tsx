@@ -1,9 +1,13 @@
-import React from "react";
-import {continueFromInitialStream} from "next/dist/server/stream-utils/node-web-streams-helper";
+import Modal from "@/components/Modal";
+import ProjectForm from "@/components/ProjectForm";
 
 const CreateProject = () => {
     return (
-        <div> CreateProject </div>
+        <Modal>
+            <h3 className="modal-head-text">Create a new Project</h3>
+            {/* eslint-disable-next-line react/jsx-no-undef */}
+            <ProjectForm/>
+        </Modal>
     )
 }
 
