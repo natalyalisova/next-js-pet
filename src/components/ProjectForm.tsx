@@ -3,6 +3,8 @@ import {SessionInterface} from "../../common.types";
 import React, {ChangeEvent} from "react";
 import Image from "next/image";
 import FormField from "@/components/FormField";
+import CustomMenu from "@/components/CustomMenu";
+import {categoryFilters} from "@/constants";
 
 type Props = {
     type: string;
@@ -60,17 +62,33 @@ const ProjectForm = ({type, session}: Props) => {
                 setState={(value) => handleStateChange('description', value)}
             />
             <FormField
-                title="Title"
-                state={form.title}
-                placeholder="Flexibble"
-                setState={(value) => handleStateChange('title', value)}
+                type="url"
+                title="Website URL"
+                state={form.liveSiteUrl}
+                placeholder="http://jsmastery.pro"
+                setState={(value) => handleStateChange('liveSiteUrl', value)}
             />
             <FormField
-                title="Title"
-                state={form.title}
-                placeholder="Flexibble"
-                setState={(value) => handleStateChange('title', value)}
+                type="url"
+                title="Github URL"
+                state={form.githubUrl}
+                placeholder="http://github.com/dindjarin"
+                setState={(value) => handleStateChange('githubUrl', value)}
             />
+
+            <CustomMenu
+                title="Category"
+                state={form.category}
+                filters={categoryFilters}
+                setState={(value) => handleStateChange('category', value)}
+
+
+            />
+
+
+            <div className="flexStart w-full">
+                <button>Create</button>
+            </div>
         </form>
     )
 }
