@@ -6,10 +6,6 @@ First, run the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
@@ -17,6 +13,52 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
 This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+
+## SVG Icons
+We use SVG icons from [https://fontawesome.com/](https://fontawesome.com/).
+#### Set Up with React
+
+We use npm to install the core package which includes all the utilities to make the icons
+work:
+
+```bash
+npm i --save @fortawesome/fontawesome-svg-core
+```
+For more details [https://fontawesome.com/docs/web/use-with/react/](https://fontawesome.com/docs/web/use-with/react/)
+
+#### Add Icon Packages
+
+For Free icons we add these styles:
+
+```bash
+# Free icons styles
+npm i --save @fortawesome/free-solid-svg-icons
+npm i --save @fortawesome/free-regular-svg-icons
+```
+#### Add the React Component
+
+And lastly, install the Font Awesome React component:
+
+```bash
+npm i --save @fortawesome/react-fontawesome@latest
+```
+
+#### How To Add Icons:
+On this project we add Individual Icons Explicitly:
+If you can't or don't want to use the Dynamic Icon Importing method, you can explicitly add individual icons to each
+component. Here's a simple example:
+
+```
+import ReactDOM from 'react-dom'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
+
+const element = <FontAwesomeIcon icon={faEnvelope} />
+
+ReactDOM.render(element, document.body)
+```
+
+
 
 ## Learn More
 
