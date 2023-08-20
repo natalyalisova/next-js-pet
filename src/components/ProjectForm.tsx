@@ -1,27 +1,80 @@
 "use client"
 import {SessionInterface} from "../../common.types";
-import React, {ChangeEvent} from "react";
+import React, {ChangeEvent, useState} from "react";
 import Image from "next/image";
 import FormField from "@/components/FormField";
 import CustomMenu from "@/components/CustomMenu";
 import {categoryFilters} from "@/constants";
+import Button from "@/components/Buttton";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faPlus} from "@fortawesome/free-solid-svg-icons/faPlus";
+import {IconProp} from "@fortawesome/fontawesome-svg-core";
+import {createProjectMutation} from "../../graphql";
+import {createNewProject, fetchToken} from "../../lib/actions";
+import {useRouter} from "next/navigation";
 
 type Props = {
     type: string;
     session: SessionInterface,
 }
 const ProjectForm = ({type, session}: Props) => {
-    const handleFormSubmit = (e: React.FormEvent) => {};
-    const handleChangeImage = (e: ChangeEvent<HTMLInputElement>) => {};
-    const handleStateChange = (fieldName: string, value: string) => {
 
+    const router = useRouter();
+
+    const handleFormSubmit = async (e: React.FormEvent) => {
+        e.preventDefault(); //prevent reload
+        setIsSubmitting(true);
+
+        const {token} = await fetchToken();
+
+        try {
+            if (type === "create"){
+                await createNewProject(form, session?.user?.id, token);
+
+                router.push("/");
+            }
+        } catch (error){
+            console.log("Error, can't create a new project: ", error)
+        } finally {
+            setIsSubmitting(false);
+        }
+
+    };
+
+    const handleChangeImage = (e: ChangeEvent<HTMLInputElement>) => {
+        e.preventDefault(); // prevent reload
+
+        const file = e.target.files?.[0];
+
+        if (!file) return console.log("file doesn't exist");
+
+        if (!file.type.includes("image")) {
+            return alert("Please upload an image file");
+        }
+
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+
+        reader.onload = () => {
+            const result = reader.result as string;
+            handleStateChange("image", result);
+        }
+    };
+
+    const handleStateChange = (fieldName: string, value: string) => {
+        setForm((prevState) => ({...prevState, [fieldName]: value}))
     }
 
-    const form = {
-        image: "",
+    const [isSubmitting, setIsSubmitting] = useState(false);
+
+    const [form, setForm] = useState({
         title: "",
         description: "",
-    }
+        image: "",
+        liveSiteUrl: "",
+        githubUrl: "",
+        category: ""
+    })
 
     return (
         <form
@@ -87,7 +140,15 @@ const ProjectForm = ({type, session}: Props) => {
 
 
             <div className="flexStart w-full">
-                <button>Create</button>
+                <Button
+                    title={isSubmitting
+                        ? `${type === "create" ? "Creating" : "Editing"} `
+                        : `${type === "create" ? "Create" : "Edit"}`
+                }
+                    type="submit"
+                    leftIcon={faPlus as IconProp}
+                    isSubmitting={isSubmitting}
+                />
             </div>
         </form>
     )

@@ -1,7 +1,4 @@
 import {Menu} from '@headlessui/react';
-import {Fragment} from 'react';
-import Image from "next/image";
-import {arrayOutputType} from "zod";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCaretDown} from "@fortawesome/free-solid-svg-icons/faCaretDown";
 
@@ -32,7 +29,7 @@ const CustomMenu = ({title, state, filters, setState}: Props) => {
                                 type="button"
                                 value={tag}
                                 className="custom_menu-item"
-                                onClick={(event) =>setState(event.currentTarget.value)}
+                                onClick={(event) => setState(event.currentTarget.value)}
                             >
                                 {tag}
                             </button>
