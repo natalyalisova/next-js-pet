@@ -1,31 +1,30 @@
-// export const getUserQuery = `query GetUser($email: String!) {
-//     user(by: {email: $email}) {
-//         id
-//         name
-//         email
-//         avatarUrl
-//         description
-//         githubUrl
-//         linkedInUrl
-//     }
-// }`
-//
-// export const createUserMutation = `
-//     mutation CreateUser($input: UserCreateInput!){
-//         userCreate(input: $input){
-//             user {
-//                 name
-//                 email
-//                 avatarUrl
-//                 description
-//                 githubUrl
-//                 linkedInUrl
-//                 id
-//             }
-//         }
-//     }
-//
-// `
+export const getUserQuery = `query GetUser($email: String!) {
+    user(by: {email: $email}) {
+        id
+        name
+        email
+        avatarUrl
+        description
+        githubUrl
+        linkedInUrl
+    }
+}`;
+
+export const createUserMutation = `
+    mutation CreateUser($input: UserCreateInput!){
+        userCreate(input: $input){
+            user {
+                name
+                email
+                avatarUrl
+                description
+                githubUrl
+                linkedInUrl
+                id
+            }
+        }
+    }
+`;
 
 
 export const createProjectMutation = `
@@ -66,22 +65,6 @@ export const deleteProjectMutation = `
       deletedId
     }
   }
-`;
-
-export const createUserMutation = `
-	mutation CreateUser($input: UserCreateInput!) {
-		userCreate(input: $input) {
-			user {
-				name
-				email
-				avatarUrl
-				description
-				githubUrl
-				linkedinUrl
-				id
-			}
-		}
-	}
 `;
 
 export const projectsQuery = `
@@ -134,19 +117,6 @@ export const getProjectByIdQuery = `
   }
 `;
 
-export const getUserQuery = `
-  query GetUser($email: String!) {
-    user(by: { email: $email }) {
-      id name 
-      email
-      avatarUrl
-      description
-      githubUrl
-      linkedinUrl
-    }
-  }
-`;
-
 export const getProjectsOfUserQuery = `
   query getUserProjects($id: ID!, $last: Int = 4) {
     user(by: { id: $id }) {
@@ -156,7 +126,7 @@ export const getProjectsOfUserQuery = `
       description
       avatarUrl
       githubUrl
-      linkedinUrl
+      linkedInUrl
       projects(last: $last) {
         edges {
           node {

@@ -6,10 +6,8 @@ import FormField from "@/components/FormField";
 import CustomMenu from "@/components/CustomMenu";
 import {categoryFilters} from "@/constants";
 import Button from "@/components/Buttton";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPlus} from "@fortawesome/free-solid-svg-icons/faPlus";
 import {IconProp} from "@fortawesome/fontawesome-svg-core";
-import {createProjectMutation} from "../../graphql";
 import {createNewProject, fetchToken} from "../../lib/actions";
 import {useRouter} from "next/navigation";
 
@@ -26,14 +24,13 @@ const ProjectForm = ({type, session}: Props) => {
         setIsSubmitting(true);
 
         const {token} = await fetchToken();
-
         try {
-            if (type === "create"){
+            if (type === "create") {
                 await createNewProject(form, session?.user?.id, token);
 
                 router.push("/");
             }
-        } catch (error){
+        } catch (error) {
             console.log("Error, can't create a new project: ", error)
         } finally {
             setIsSubmitting(false);
@@ -68,12 +65,12 @@ const ProjectForm = ({type, session}: Props) => {
     const [isSubmitting, setIsSubmitting] = useState(false);
 
     const [form, setForm] = useState({
-        title: "",
-        description: "",
+        title: "ghccc",
+        description: "hjhkjj",
         image: "",
-        liveSiteUrl: "",
-        githubUrl: "",
-        category: ""
+        liveSiteUrl: "http://huujhj.ua",
+        githubUrl: "http://huujhj.ua",
+        category: "UI/UX",
     })
 
     return (
@@ -88,7 +85,7 @@ const ProjectForm = ({type, session}: Props) => {
                     id="image"
                     type="file"
                     accept="image/*"
-                    required={type === 'create'}
+                    required={type === "create"}
                     className="form_image-input"
                     onChange={handleChangeImage}
                 />
@@ -135,7 +132,6 @@ const ProjectForm = ({type, session}: Props) => {
                 filters={categoryFilters}
                 setState={(value) => handleStateChange('category', value)}
 
-
             />
 
 
@@ -144,7 +140,7 @@ const ProjectForm = ({type, session}: Props) => {
                     title={isSubmitting
                         ? `${type === "create" ? "Creating" : "Editing"} `
                         : `${type === "create" ? "Create" : "Edit"}`
-                }
+                    }
                     type="submit"
                     leftIcon={faPlus as IconProp}
                     isSubmitting={isSubmitting}

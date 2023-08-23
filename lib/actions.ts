@@ -1,7 +1,6 @@
 import {GraphQLClient} from "graphql-request";
-import {createProjectMutation, createUserMutation, getUserQuery} from "../graphql";
+import {createProjectMutation, createUserMutation, getUserQuery, projectsQuery} from "../graphql";
 import {ProjectForm} from "../common.types";
-import theme from "tailwindcss/defaultTheme";
 
 //create real environment
 
@@ -19,6 +18,7 @@ const makeGraphQLRequest = async (query: string, variables = {}) => {
     try {
         return await client.request(query, variables);  //client.request
     } catch (error) {
+        console.debug("error", error);
         throw error;
     }
 }
@@ -42,7 +42,7 @@ export const createUser = (name: string, email: string, avatarUrl: string) => {
 }
 
 
-export  const fetchToken = async () => {
+export const fetchToken = async () => {
     try {
         const response = await fetch(`${serverUrl}/api/auth/token`);
         return response.json();
@@ -52,7 +52,6 @@ export  const fetchToken = async () => {
 }
 
 
-
 export const uploadImage = async (imagePath: string) => {
     try {
         const response = await fetch(`${serverUrl}/api/upload`, {
@@ -60,7 +59,7 @@ export const uploadImage = async (imagePath: string) => {
             body: JSON.stringify({path: imagePath})
         })
 
-        return response.json()
+        return response.json();
     } catch (error) {
         console.log("Error upload image: ", error);
         throw error;
@@ -71,16 +70,21 @@ export const createNewProject = async (form: ProjectForm, creatorId: string, tok
     const imageUrl = await uploadImage(form.image);
 
     if (imageUrl.url) {
-
-        client.setHeader("Authorization", `Bearer ${token}`) //only authorized user can send this requests
-
         const variables = {
-            ...form,
-            image: imageUrl.url,
-            createdBy: {
-                link: creatorId
+            input: {
+                ...form,
+                image: imageUrl.url,
+                createdBy: {
+                    link: creatorId
+                }
             }
+
         }
         return makeGraphQLRequest(createProjectMutation, variables)
     }
+}
+
+export const fetchAllProjects = async (category?: string, endCursor?: string) => {
+    client.setHeader("x-api-key", apiKey); //need to get access from provider
+    return makeGraphQLRequest(projectsQuery, {category, endCursor});
 }

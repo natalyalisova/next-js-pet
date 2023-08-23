@@ -8,6 +8,14 @@ cloudinary.config({
     }
 )
 
+
+export async function GET(){
+    return NextResponse.json(
+        {message: "Hello from Upload"},
+        {status: 200}
+    )
+}
+
 export async function POST(request: Request) {
     const {path} = await request.json();
 
