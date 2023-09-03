@@ -1,7 +1,9 @@
+"use client"
 import Link from "next/link";
 import Image from "next/image";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEye, faHeart} from "@fortawesome/free-regular-svg-icons";
+import {useEffect, useState} from "react";
 
 
 type Props ={
@@ -15,6 +17,15 @@ type Props ={
 
 
 const ProjectCard =({id,image, title, name, avatarUrl, userId}: Props)=>{
+   const [randomLikes, setRandomLikes] = useState(0);
+   const [randomViews, setRandomViews] = useState('');
+
+   useEffect(() => {
+       setRandomLikes(Math.floor(Math.random()*10000));
+       setRandomViews(String((Math.floor(Math.random()*10000)/1000).toFixed(1)+"k"))
+   }, [])
+
+
     return (
         <div className="flexCenter flex-col rounded-2xl drop-shadow-card">
             ProjectCard
@@ -40,17 +51,18 @@ const ProjectCard =({id,image, title, name, avatarUrl, userId}: Props)=>{
                             className="rounded-full"
                             alt="Profile Image"
                                 />
+                        <p>{name}</p>
                     </div>
                 </Link>
 
                 <div className="flexCenter gap-3">
                     <div className="flexCenter gap-2">
                         <FontAwesomeIcon icon={faHeart} width={25} height={25}/>
-                        <p className="text-sm ml-2">376</p>
+                        <p className="text-sm">{randomLikes}</p>
                     </div>
                     <div className="flexCenter gap-2">
                         <FontAwesomeIcon icon={faEye} width={25} height={25}/>
-                        <p className="text-sm ml-2">3,2k</p>
+                        <p className="text-sm">{randomViews}</p>
                     </div>
                 </div>
             </div>
