@@ -1,6 +1,7 @@
 import {GraphQLClient} from "graphql-request";
 import {createProjectMutation, createUserMutation, getUserQuery, projectsQuery} from "../graphql";
 import {ProjectForm} from "../common.types";
+import {categoryFilters} from "@/constants";
 
 //create real environment
 
@@ -52,6 +53,7 @@ export const fetchToken = async () => {
 }
 
 
+
 export const uploadImage = async (imagePath: string) => {
     try {
         const response = await fetch(`${serverUrl}/api/upload`, {
@@ -84,7 +86,10 @@ export const createNewProject = async (form: ProjectForm, creatorId: string, tok
     }
 }
 
-export const fetchAllProjects = async (category?: string, endCursor?: string) => {
-    client.setHeader("x-api-key", apiKey); //need to get access from provider
-    return makeGraphQLRequest(projectsQuery, {category, endCursor});
-}
+export const fetchAllProjects = (category?: string | null) => {
+    client.setHeader("x-api-key", apiKey);
+
+    const categories = category == null ? categoryFilters : [category];
+
+    return makeGraphQLRequest(projectsQuery, {categories});
+};
