@@ -50,6 +50,9 @@ body {
     @apply md:text-5xl text-3xl font-extrabold text-left max-w-5xl w-full;
 }
 
+.modal-head-info {
+    @apply flex justify-start items-center  w-full;
+}
 .no-result-text {
     @apply w-full text-center my-10 px-2;
 }
