@@ -8,6 +8,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faRocket} from "@fortawesome/free-solid-svg-icons/faRocket";
 import RelatedProjects from "@/components/RelatedProjects";
 import {getCurrentUser} from "../../../../lib/session";
+import ProjectActions from "@/components/ProjectActions";
 
 
 const page = async ({params: {id,}}: { params: { id: string } }) => {
@@ -28,12 +29,17 @@ const page = async ({params: {id,}}: { params: { id: string } }) => {
 
     return (
         <Modal>
-            <h3 className="modal-head-text">{result.project?.title}</h3>
-            <div className="modal-head-info mt-5">
-                <Link href={renderLink()}>
-                    <div className="flexStart gap-2">
+            <section className=" w-full">
+                <div className="flex-1 flexStart">
+                    <p className="self-start text-xl font-semibold">
+                        {result.project?.title}
+                    </p>
+                </div>
+
+                <div className="flex flex-row justify-between mt-5 w-full">
+                    <Link href={renderLink()} className="flex flex-row flexStart gap-3">
                         <Image
-                            src={projectDetails?.createdBy?.avatarUrl}
+                            src={result.project?.createdBy?.avatarUrl}
                             width={24}
                             height={24}
                             className="rounded-full"
@@ -41,14 +47,16 @@ const page = async ({params: {id,}}: { params: { id: string } }) => {
                         />
                         <p>{result.project?.createdBy.name}</p>
                         <p className="text-purple-700">{result.project?.category}</p>
-                    </div>
-                </Link>
-                {session?.user?.email === projectDetails?.createdBy?.email && (
-                    <div className="flex justify-end items-center gap-2">
-                        Project actions
-                    </div>
-                )}
-            </div>
+                    </Link>
+
+                    {session?.user?.email === projectDetails?.createdBy?.email && (
+                        <div className="flex flex-end  items-center gap-2">
+                            <ProjectActions projectId={result.project?.id}/>
+                        </div>
+                    )}
+                </div>
+
+            </section>
             <div className="w-full bg-sky-400 rounded-md mt-5">
                 <div className="flex justify-center items-center p-8">
                     <Image

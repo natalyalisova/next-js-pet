@@ -1,7 +1,7 @@
 import {GraphQLClient} from "graphql-request";
 import {
     createProjectMutation,
-    createUserMutation,
+    createUserMutation, deleteProjectMutation,
     getProjectByIdQuery,
     getProjectsOfUserQuery,
     getUserQuery,
@@ -60,7 +60,6 @@ export const fetchToken = async () => {
 }
 
 
-
 export const uploadImage = async (imagePath: string) => {
     try {
         const response = await fetch(`${serverUrl}/api/upload`, {
@@ -79,6 +78,7 @@ export const createNewProject = async (form: ProjectForm, creatorId: string, tok
     const imageUrl = await uploadImage(form.image);
 
     if (imageUrl.url) {
+      //  client.setHeader("Authorization", `Bearer ${token}`)
         const variables = {
             input: {
                 ...form,
@@ -101,12 +101,17 @@ export const fetchAllProjects = (category?: string | null) => {
     return makeGraphQLRequest(projectsQuery, {categories});
 };
 
-export const getProjectDetails = (id: string) =>{
+export const getProjectDetails = (id: string) => {
     client.setHeader("x-api-key", apiKey); //need to get access from provider, security issue
     return makeGraphQLRequest(getProjectByIdQuery, {id});
 }
 
 export const getUserProjects = (id: string, last?: number) => {
     client.setHeader("x-api-key", apiKey); //need to get access from provider, security issue
-    return makeGraphQLRequest(getProjectsOfUserQuery, {id,last});
+    return makeGraphQLRequest(getProjectsOfUserQuery, {id, last});
+}
+
+export const deleteProject = (id: string, token: number) => {
+  //  client.setHeader("Authorization", `Bearer ${token}`) //authorization action
+    return makeGraphQLRequest(deleteProjectMutation, {id});
 }
