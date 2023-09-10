@@ -1,5 +1,12 @@
 import {GraphQLClient} from "graphql-request";
-import {createProjectMutation, createUserMutation, getProjectByIdQuery, getUserQuery, projectsQuery} from "../graphql";
+import {
+    createProjectMutation,
+    createUserMutation,
+    getProjectByIdQuery,
+    getProjectsOfUserQuery,
+    getUserQuery,
+    projectsQuery
+} from "../graphql";
 import {ProjectForm} from "../common.types";
 import {categoryFilters} from "@/constants";
 
@@ -97,4 +104,9 @@ export const fetchAllProjects = (category?: string | null) => {
 export const getProjectDetails = (id: string) =>{
     client.setHeader("x-api-key", apiKey); //need to get access from provider, security issue
     return makeGraphQLRequest(getProjectByIdQuery, {id});
+}
+
+export const getUserProjects = (id: string, last?: number) => {
+    client.setHeader("x-api-key", apiKey); //need to get access from provider, security issue
+    return makeGraphQLRequest(getProjectsOfUserQuery, {id,last});
 }
