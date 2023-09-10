@@ -1,14 +1,16 @@
 import {GraphQLClient} from "graphql-request";
 import {
     createProjectMutation,
-    createUserMutation, deleteProjectMutation,
+    createUserMutation,
+    deleteProjectMutation,
     getProjectByIdQuery,
     getProjectsOfUserQuery,
     getUserQuery,
-    projectsQuery
+    projectsQuery, updateProjectMutation
 } from "../graphql";
 import {ProjectForm} from "../common.types";
 import {categoryFilters} from "@/constants";
+import projectForm from "@/components/ProjectForm";
 
 //create real environment
 
@@ -78,7 +80,7 @@ export const createNewProject = async (form: ProjectForm, creatorId: string, tok
     const imageUrl = await uploadImage(form.image);
 
     if (imageUrl.url) {
-      //  client.setHeader("Authorization", `Bearer ${token}`)
+        //  client.setHeader("Authorization", `Bearer ${token}`)
         const variables = {
             input: {
                 ...form,
@@ -112,6 +114,38 @@ export const getUserProjects = (id: string, last?: number) => {
 }
 
 export const deleteProject = (id: string, token: number) => {
-  //  client.setHeader("Authorization", `Bearer ${token}`) //authorization action
+    //  client.setHeader("Authorization", `Bearer ${token}`) //authorization action TODO
     return makeGraphQLRequest(deleteProjectMutation, {id});
+}
+
+export const updateProject = async (form: ProjectForm, projectId: string, token: number) => {
+
+    //check if user redeployerd image or only text fields
+    function isBase64DataURL(value: string) {
+        const base64Regex = /^data:image\/[a-z]+;base64,/;
+        return base64Regex.test(value);
+    }
+
+    let updatedForm = {...form};
+
+    const isUploadingNewImage = isBase64DataURL(form.image);
+
+    if (isUploadingNewImage) {
+        const imageUrl = await uploadImage(form.image);
+
+        if (imageUrl.url) {
+            updatedForm = {...updatedForm, image: imageUrl.url};
+        }
+    }
+
+ //  client.setHeader("Authorization", `Bearer ${token}`) //authorization action TODO
+
+    const variables = {
+        id: projectId,
+        input: updatedForm,
+    };
+
+    return makeGraphQLRequest(updateProjectMutation, variables);
+
+
 }
