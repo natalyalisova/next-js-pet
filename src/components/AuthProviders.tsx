@@ -2,7 +2,7 @@
 
 import {getProviders, signIn} from "next-auth/react";
 import {useEffect, useState} from "react";
-import Button from "@/components/Buttton";
+import Button from "@/components/Button";
 
 
 type Provider = {

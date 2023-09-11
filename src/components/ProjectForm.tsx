@@ -5,7 +5,7 @@ import Image from "next/image";
 import FormField from "@/components/FormField";
 import CustomMenu from "@/components/CustomMenu";
 import {categoryFilters} from "@/constants";
-import Button from "@/components/Buttton";
+import Button from "@/components/Button";
 import {faPlus} from "@fortawesome/free-solid-svg-icons/faPlus";
 import {IconProp} from "@fortawesome/fontawesome-svg-core";
 import {createNewProject, fetchToken, updateProject} from "../../lib/actions";
